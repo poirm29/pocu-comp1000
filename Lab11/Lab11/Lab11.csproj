@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\BuildTargets\Common.targets" />
+</Project>
