@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Assignment1
@@ -27,7 +28,7 @@ namespace Assignment1
                 }
             }
 
-            StringBuilder sb = new StringBuilder("0b",num.Length);
+            StringBuilder sb = new StringBuilder("0b", num.Length);
 
             for (int i = 2; i < num.Length; i++)
             {
@@ -41,9 +42,7 @@ namespace Assignment1
                 }
             }
 
-            string numOnesComplement = sb.ToString();
-
-            return numOnesComplement;
+            return sb.ToString();
         }
 
         public static string GetTwosComplementOrNull(string num)
@@ -78,36 +77,208 @@ namespace Assignment1
                 }
             }
 
-            int count = 0;
             for (int i = sb.Length - 1; i > 1; i--)
             {
                 if (sb[i] == '1')
                 {
-                    count++;
+                    sb[i] = '0';
                 }
                 else
                 {
-                    sb.Replace('1', '0', i, sb.Length - 1);
+                    sb[i] = '1';
+                    break;
                 }
             }
 
-            string numTwosComplement = sb.ToString();
-
-            return numTwosComplement;
+            return sb.ToString();
         }
 
         public static string ToBinaryOrNull(string num)
         {
-            return null;
+            if (num.StartsWith("0b"))
+            {
+                if (num == "0b")
+                {
+                    return null;
+                }
+
+                else
+                {
+                    for (int i = 2; i < num.Length; i++)
+                    {
+                        if (!(num[i] == '0' || num[i] == '1'))
+                        {
+                            return null;
+                        }
+                    }
+                }
+
+                return num;
+            }
+
+            else if (num.StartsWith("0x"))
+            {
+                if (num == "0x")
+                {
+                    return null;
+                }
+
+                else
+                {
+                    for (int i = 2; i < num.Length; i++)
+                    {
+                        if (!(('0' <= num[i] && num[i] <= '9') || ('A' <= num[i] && num[i] <= 'F')))
+                        {
+                            return null;
+                        }
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder("0b", num.Length * 4);
+
+                for (int i = 2; i < num.Length; i++)
+                {
+                    string convertedBinaryToken = HexNumDictionary(num[i]);
+
+                    sb.Append(convertedBinaryToken);
+                }
+
+                return sb.ToString(); 
+            }
+
+            else
+            {
+                for (int i = 0; i < num.Length; i++)
+                {
+                    if (!('0' <= num[i] && num[i] <= '9'))
+                    {
+                        return null;
+                    }
+                }
+
+                int dec = int.Parse(num);
+
+                StringBuilder sb = new StringBuilder();
+
+                int remainder = 0;
+                while (true)
+                {
+                    if (dec == 1)
+                    {
+                        sb.Append('1');
+                        break;
+                    }
+                    remainder = dec % 2;
+                    if (remainder == 1)
+                    {
+                        sb.Append('1');
+                    }
+                    else
+                    {
+                        sb.Append('0');
+                    }
+                        dec = dec / 2;
+                }
+
+                string ReversedResult = sb.ToString();
+
+                StringBuilder resultSb = new StringBuilder();
+
+                for (int i = ReversedResult.Length - 1; i >= 0; i--)
+                {
+                    resultSb.Append(ReversedResult[i]);
+                }
+
+                return resultSb.ToString();
+            }
         }
 
         public static string ToDecimalOrNull(string num)
         {
-            return null;
+            if (num.StartsWith("0b"))
+            {
+                if (num == "0b")
+                {
+                    return null;
+                }
+
+                else
+                {
+                    for (int i = 2; i < num.Length; i++)
+                    {
+                        if (!(num[i] == '0' || num[i] == '1'))
+                        {
+                            return null;
+                        }
+                    }
+                }
+
+                int result = 0;
+                int twoMltiplier = 1;
+
+                for (int i = num.Length - 1; i >= 0; i--)
+                {
+                    if (num[i] == '1')
+                    {
+                        result += twoMltiplier;
+                    }
+                    twoMltiplier *= 2;
+                }
+
+                return result.ToString();
+            }
+
+            else if (num.StartsWith("0x"))
+            {
+                if (num == "0x")
+                {
+                    return null;
+                }
+
+                else
+                {
+                    for (int i = 2; i < num.Length; i++)
+                    {
+                        if (!(('0' <= num[i] && num[i] <= '9') || ('A' <= num[i] && num[i] <= 'F')))
+                        {
+                            return null;
+                        }
+                    }
+                }
+
+                string binaryString = ToBinaryOrNull(num);
+
+                return ToDecimalOrNull(binaryString);
+            }
+
+            else
+            {
+                return num;
+            }
         }
 
         public static string ToHexOrNull(string num)
         {
+            if (num.StartsWith("0b"))
+            {
+                if (num == "0b")
+                {
+                    return null;
+                }
+
+                else
+                {
+                    for (int i = 2; i < num.Length; i++)
+                    {
+                        if (!(num[i] == '0' || num[i] == '1'))
+                        {
+                            return null;
+                        }
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder("0x", num.Length);
+            }
             return null;
         }
 
@@ -121,6 +292,70 @@ namespace Assignment1
         {
             bOverflow = false;
             return null;
+        }
+
+        public static string HexNumDictionary(char num)
+        {
+            Dictionary<char, string> HexDictionary = new Dictionary<char, string>()
+            {
+                {'0', "0000"},
+                {'1', "0001"},
+                {'2', "0010"},
+                {'3', "0011"},
+                {'4', "0100"},
+                {'5', "0101"},
+                {'6', "0110"},
+                {'7', "0111"},
+                {'8', "1000"},
+                {'9', "1001"},
+                {'A', "1010"},
+                {'B', "1011"},
+                {'C', "1100"},
+                {'D', "1101"},
+                {'E', "1110"},
+                {'F', "1111"}
+            };
+
+            string result = "";
+
+            if (HexDictionary.TryGetValue(num, out result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
+        public static char BinNumDictionary(string num)
+        {
+            Dictionary<string, char> HexDictionary = new Dictionary<string, char>()
+            {
+                {"0000", '0'},
+                {"0001", '1'},
+                {"0010", '2'},
+                {"0011", '3'},
+                {"0100", '4'},
+                {"0101", '5'},
+                {"0110", '6'},
+                {"0111", '7'},
+                {"1000", '8'},
+                {"1001", '9'},
+                {"1010", 'A'},
+                {"1011", 'B'},
+                {"1100", 'C'},
+                {"1101", 'D'},
+                {"1110", 'E'},
+                {"1111", 'F'}
+            };
+
+            char result = ' ';
+
+            if (HexDictionary.TryGetValue(num, out result))
+            {
+                return result;
+            }
+
+            return 'X';
         }
     }
 }
