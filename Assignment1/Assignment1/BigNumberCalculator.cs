@@ -8,6 +8,7 @@ namespace Assignment1
     {
         public BigNumberCalculator(int bitCount, EMode mode)
         {
+
         }
 
         public static string GetOnesComplementOrNull(string num)
@@ -148,48 +149,97 @@ namespace Assignment1
 
             else
             {
-                for (int i = 0; i < num.Length; i++)
+                int decNum = 0;
+
+                if (!int.TryParse(num, out decNum))
                 {
-                    if (!('0' <= num[i] && num[i] <= '9'))
-                    {
-                        return null;
-                    }
+                    return null;
                 }
 
-                int dec = int.Parse(num);
-
-                StringBuilder sb = new StringBuilder();
-
-                int remainder = 0;
-                while (true)
+                if (decNum >= 0)
                 {
-                    if (dec == 1)
+                    StringBuilder sb = new StringBuilder();
+
+                    int remainder = 0;
+                    while (true)
                     {
-                        sb.Append('1');
-                        break;
+                        if (decNum == 1)
+                        {
+                            sb.Append('1');
+                            break;
+                        }
+                        remainder = decNum % 2;
+                        if (remainder == 1)
+                        {
+                            sb.Append('1');
+                        }
+                        else
+                        {
+                            sb.Append('0');
+                        }
+                        decNum = decNum / 2;
                     }
-                    remainder = dec % 2;
-                    if (remainder == 1)
+
+                    sb.Append('0');
+                    sb.Append('b');
+                    sb.Append('0');
+
+                    string reversedResult = sb.ToString();
+
+                    StringBuilder resultSb = new StringBuilder();
+
+                    for (int i = reversedResult.Length - 1; i >= 0; i--)
                     {
-                        sb.Append('1');
+                        resultSb.Append(reversedResult[i]);
                     }
-                    else
-                    {
-                        sb.Append('0');
-                    }
-                        dec = dec / 2;
+
+                    return resultSb.ToString();
                 }
 
-                string ReversedResult = sb.ToString();
-
-                StringBuilder resultSb = new StringBuilder();
-
-                for (int i = ReversedResult.Length - 1; i >= 0; i--)
+                else
                 {
-                    resultSb.Append(ReversedResult[i]);
-                }
+                    decNum = ~decNum;
+                    decNum += 1;
 
-                return resultSb.ToString();
+                    StringBuilder sb = new StringBuilder();
+
+                    int remainder = 0;
+                    while (true)
+                    {
+                        if (decNum == 1)
+                        {
+                            sb.Append('1');
+                            break;
+                        }
+                        remainder = decNum % 2;
+                        if (remainder == 1)
+                        {
+                            sb.Append('1');
+                        }
+                        else
+                        {
+                            sb.Append('0');
+                        }
+                        decNum = decNum / 2;
+                    }
+
+                    sb.Append('0');
+                    sb.Append('b');
+                    sb.Append('0');
+
+                    string reversedResult = sb.ToString();
+
+                    StringBuilder resultSb = new StringBuilder();
+
+                    for (int i = reversedResult.Length - 1; i >= 0; i--)
+                    {
+                        resultSb.Append(reversedResult[i]);
+                    }
+
+                    string result = GetTwosComplementOrNull(resultSb.ToString());
+
+                    return result;
+                }
             }
         }
 
@@ -213,19 +263,43 @@ namespace Assignment1
                     }
                 }
 
-                int result = 0;
-                int twoMltiplier = 1;
-
-                for (int i = num.Length - 1; i >= 0; i--)
+                if (num[2] == '0')
                 {
-                    if (num[i] == '1')
-                    {
-                        result += twoMltiplier;
-                    }
-                    twoMltiplier *= 2;
-                }
+                    int result = 0;
+                    int twoMltiplier = 1;
 
-                return result.ToString();
+                    for (int i = num.Length - 1; i >= 0; i--)
+                    {
+                        if (num[i] == '1')
+                        {
+                            result += twoMltiplier;
+                        }
+                        twoMltiplier *= 2;
+                    }
+
+                    return result.ToString();
+                }
+                else
+                {
+                    string twosComplentNum = GetTwosComplementOrNull(num);
+
+                    int result = 0;
+                    int twoMltiplier = 1;
+
+                    for (int i = num.Length - 1; i >= 0; i--)
+                    {
+                        if (num[i] == '1')
+                        {
+                            result += twoMltiplier;
+                        }
+                        twoMltiplier *= 2;
+                    }
+
+                    result = ~result;
+                    result = result + 1;
+
+                    return result.ToString();
+                }
             }
 
             else if (num.StartsWith("0x"))
