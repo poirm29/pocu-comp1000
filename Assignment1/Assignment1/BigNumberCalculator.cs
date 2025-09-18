@@ -498,29 +498,29 @@ namespace Assignment1
                 }
             }
 
-            bool a = false;
-            bool b = true;
+            bool bCarried1 = false;
+            bool bCarried2 = true;
             if (previousLastCarryNum == 1)
             {
-                a = true;
+                bCarried1 = true;
             }
             else
             {
-                a = false;
+                bCarried1 = false;
             }
 
             if (carryNum == 1)
             {
-                b = true;
+                bCarried2 = true;
             }
             else
             {
-                b = false;
+                bCarried2 = false;
             }
 
-            bOverflow = a ^ b;
+            bOverflow = bCarried1 ^ bCarried2;
 
-                StringBuilder sb = new StringBuilder("0b");
+            StringBuilder sb = new StringBuilder("0b");
 
             switch (Mode)
             {
