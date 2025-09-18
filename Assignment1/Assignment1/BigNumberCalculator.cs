@@ -137,6 +137,12 @@ namespace Assignment1
                             sb.Append('1');
                             break;
                         }
+                        else if (decNum == 0)
+                        {
+                            sb.Append('0');
+                            break;
+                        }
+
                         remainder = decNum % 2;
                         if (remainder == 1)
                         {
