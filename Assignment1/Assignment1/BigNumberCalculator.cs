@@ -451,6 +451,8 @@ namespace Assignment1
             int carryNum = 0;
             int digitNum = 0;
 
+            int previousLastCarryNum = 0;
+
             bOverflow = false;
 
             for (int i = binNum1.Length - 1; i >= 0; i--)
@@ -489,9 +491,36 @@ namespace Assignment1
                 {
                     addResultSb.Insert(0, '1');
                 }
+
+                if (i == 1)
+                {
+                    previousLastCarryNum = carryNum;
+                }
             }
 
-            StringBuilder sb = new StringBuilder("0b");
+            bool a = false;
+            bool b = true;
+            if (previousLastCarryNum == 1)
+            {
+                a = true;
+            }
+            else
+            {
+                a = false;
+            }
+
+            if (carryNum == 1)
+            {
+                b = true;
+            }
+            else
+            {
+                b = false;
+            }
+
+            bOverflow = a ^ b;
+
+                StringBuilder sb = new StringBuilder("0b");
 
             switch (Mode)
             {
@@ -634,11 +663,11 @@ namespace Assignment1
             return true;
         }
 
-        public static bool IsInputInBitCount(string num, int BitCount)
+        public static bool IsInputInBitCount(string num, int bitCount)
         {
             string binNum = ToBinaryOrNull(num);
 
-            if (binNum.Length - 2 > BitCount)
+            if (binNum.Length - 2 > bitCount)
             {
                 return false;
             }
