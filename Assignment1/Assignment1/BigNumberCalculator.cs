@@ -451,6 +451,8 @@ namespace Assignment1
             int carryNum = 0;
             int digitNum = 0;
 
+            bOverflow = false;
+
             for (int i = binNum1.Length - 1; i >= 0; i--)
             {
                 digitNum = binNum1[i] ^ binNum2[i];
@@ -499,7 +501,6 @@ namespace Assignment1
                         sb.Append(addResultSb[i]);
                     }
 
-                    bOverflow = false;
                     return ToDecimalOrNull(sb.ToString());
                 case EMode.Binary:
                     for (int i = 0; i < addResultSb.Length; i++)
@@ -507,11 +508,9 @@ namespace Assignment1
                         sb.Append(addResultSb[i]);
                     }
 
-                    bOverflow = false;
                     return sb.ToString();
             }
 
-            bOverflow = false;
             return null;
         }
 
@@ -585,7 +584,7 @@ namespace Assignment1
             return ' ';
         }
 
-        public static bool IsItValidNumFormat (string num)
+        public static bool IsItValidNumFormat(string num)
         {
             if (num.StartsWith("0b"))
             {
@@ -635,7 +634,7 @@ namespace Assignment1
             return true;
         }
 
-        public static bool IsInputInBitCount (string num, int BitCount)
+        public static bool IsInputInBitCount(string num, int BitCount)
         {
             string binNum = ToBinaryOrNull(num);
 
