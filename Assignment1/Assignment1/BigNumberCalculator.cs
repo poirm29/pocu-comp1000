@@ -232,7 +232,7 @@ namespace Assignment1
                     int result = 0;
                     int twoMltiplier = 1;
 
-                    for (int i = num.Length - 1; i >= 0; i--)
+                    for (int i = num.Length - 1; i >= 2; i--)
                     {
                         if (num[i] == '1')
                         {
@@ -249,7 +249,7 @@ namespace Assignment1
                     int result = 0;
                     int twoMltiplier = 1;
 
-                    for (int i = twosComplentNum.Length - 1; i >= 0; i--)
+                    for (int i = twosComplentNum.Length - 1; i >= 2; i--)
                     {
                         if (twosComplentNum[i] == '1')
                         {
@@ -660,10 +660,25 @@ namespace Assignment1
 
             else
             {
-                int decNum = 0;
-                if (!int.TryParse(num, out decNum))
+                if (num[0] == '-')
                 {
-                    return false;
+                    for (int i = 1; i < num.Length - 1; i++)
+                    {
+                        if (!(48 <= num[i] && num[i] <= 57))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < num.Length - 1; i++)
+                    {
+                        if (!(48 <= num[i] && num[i] <= 57))
+                        {
+                            return false;
+                        }
+                    }
                 }
             }
             return true;
