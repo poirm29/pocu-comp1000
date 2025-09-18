@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Pipes;
-using System.Runtime.ExceptionServices;
-using System.Runtime.Intrinsics.X86;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Xml;
 
 namespace Assignment1
 {
@@ -103,7 +98,7 @@ namespace Assignment1
 
         public static string ToBinaryOrNull(string num)
         {
-            if(!IsItValidNumFormat(num))
+            if (!IsItValidNumFormat(num))
             {
                 return null;
             }
@@ -528,7 +523,7 @@ namespace Assignment1
 
         public static string HexNumDictionary(char num)
         {
-            Dictionary<char, string> HexDictionary = new Dictionary<char, string>()
+            Dictionary<char, string> hexDictionary = new Dictionary<char, string>()
             {
                 {'0', "0000"},
                 {'1', "0001"},
@@ -550,7 +545,7 @@ namespace Assignment1
 
             string result = "";
 
-            if (HexDictionary.TryGetValue(num, out result))
+            if (hexDictionary.TryGetValue(num, out result))
             {
                 return result;
             }
@@ -560,7 +555,7 @@ namespace Assignment1
 
         public static char HexNumDictionary(int num)
         {
-            Dictionary<int, char> HexDictionary = new Dictionary<int, char>()
+            Dictionary<int, char> hexDictionary = new Dictionary<int, char>()
             {
                 {0, '0'},
                 {1, '1'},
@@ -582,7 +577,7 @@ namespace Assignment1
 
             char result = ' ';
 
-            if (HexDictionary.TryGetValue(num, out result))
+            if (hexDictionary.TryGetValue(num, out result))
             {
                 return result;
             }
