@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Assignment1
@@ -123,97 +124,46 @@ namespace Assignment1
 
             else
             {
-                int decNum = int.Parse(num);
+                int decNum = 0;
+                decNum = int.Parse(num);
+
+                StringBuilder sb = new StringBuilder("0b");
 
                 if (decNum >= 0)
                 {
-                    StringBuilder sb = new StringBuilder();
-
-                    int remainder = 0;
                     while (true)
                     {
                         if (decNum == 1)
                         {
-                            sb.Append('1');
-                            break;
-                        }
-                        else if (decNum == 0)
-                        {
-                            sb.Append('0');
-                            break;
+                            sb.Insert(2, decNum);
+                            sb.Insert(2, '0');
+
+                            return sb.ToString();
                         }
 
-                        remainder = decNum % 2;
-                        if (remainder == 1)
-                        {
-                            sb.Append('1');
-                        }
-                        else
-                        {
-                            sb.Append('0');
-                        }
-                        decNum = decNum / 2;
+                        sb.Insert(2, decNum % 2);
+                        decNum /= 2;
                     }
-
-                    sb.Append('0');
-                    sb.Append('b');
-                    sb.Append('0');
-
-                    string reversedResult = sb.ToString();
-
-                    StringBuilder resultSb = new StringBuilder();
-
-                    for (int i = reversedResult.Length - 1; i >= 0; i--)
-                    {
-                        resultSb.Append(reversedResult[i]);
-                    }
-
-                    return resultSb.ToString();
                 }
-
                 else
                 {
                     decNum = ~decNum;
                     decNum += 1;
 
-                    StringBuilder sb = new StringBuilder();
-
-                    int remainder = 0;
                     while (true)
                     {
                         if (decNum == 1)
                         {
-                            sb.Append('1');
+                            sb.Insert(2, decNum);
+                            sb.Insert(2, '0');
+
                             break;
                         }
-                        remainder = decNum % 2;
-                        if (remainder == 1)
-                        {
-                            sb.Append('1');
-                        }
-                        else
-                        {
-                            sb.Append('0');
-                        }
-                        decNum = decNum / 2;
+
+                        sb.Insert(2, decNum % 2);
+                        decNum /= 2;
                     }
-
-                    sb.Append('0');
-                    sb.Append('b');
-                    sb.Append('0');
-
-                    string reversedResult = sb.ToString();
-
-                    StringBuilder resultSb = new StringBuilder();
-
-                    for (int i = reversedResult.Length - 1; i >= 0; i--)
-                    {
-                        resultSb.Append(reversedResult[i]);
-                    }
-
-                    string result = GetTwosComplementOrNull(resultSb.ToString());
-
-                    return result;
+                    return GetTwosComplementOrNull(sb.ToString());
                 }
             }
         }
@@ -242,6 +192,7 @@ namespace Assignment1
                     }
                     return sumOfbits.ToString();
                 }
+
                 else
                 {
                     string twosComplentNum = GetTwosComplementOrNull(num);
