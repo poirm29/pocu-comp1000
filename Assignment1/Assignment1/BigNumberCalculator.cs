@@ -607,7 +607,7 @@ namespace Assignment1
         {
             if (num.StartsWith("0b"))
             {
-                if (num.Length > 3)
+                if (num.Length >= 3)
                 {
                     for (int i = 2; i < num.Length; i++)
                     {
@@ -623,7 +623,7 @@ namespace Assignment1
 
             else if (num.StartsWith("0x"))
             {
-                if (num.Length > 3)
+                if (num.Length >= 3)
                 {
                     for (int i = 2; i < num.Length; i++)
                     {
@@ -639,7 +639,7 @@ namespace Assignment1
 
             else if (num.StartsWith('-'))
             {
-                if (num.Length > 2)
+                if (num.Length >= 2)
                 {
                     if (!num.StartsWith('0'))
                     {
@@ -657,7 +657,7 @@ namespace Assignment1
 
             else
             {
-                if (num.Length > 1)
+                if (num.Length >= 1)
                 {
                     if (!num.StartsWith('0'))
                     {
