@@ -110,7 +110,7 @@ namespace Assignment1
 
             else if (num.StartsWith("0x"))
             {
-                StringBuilder sb = new StringBuilder("0b", num.Length * 4);
+                StringBuilder sb = new StringBuilder("0b");
 
                 for (int i = 2; i < num.Length; i++)
                 {
@@ -229,18 +229,18 @@ namespace Assignment1
             {
                 if (num[2] == '0')
                 {
-                    int result = 0;
+                    int sumOfbits = 0;
                     int twoMltiplier = 1;
 
                     for (int i = num.Length - 1; i >= 2; i--)
                     {
                         if (num[i] == '1')
                         {
-                            result += twoMltiplier;
+                            sumOfbits += twoMltiplier;
                         }
                         twoMltiplier *= 2;
                     }
-                    return result.ToString();
+                    return sumOfbits.ToString();
                 }
                 else
                 {
@@ -298,7 +298,7 @@ namespace Assignment1
                 {
                     for (int i = num.Length - 1; i > 1; i--)
                     {
-                        if (count < 4 && i == 2)
+                        if (count < 3 && i == 2)
                         {
                             while (count < 4)
                             {
@@ -309,7 +309,7 @@ namespace Assignment1
                                 twoMltiplier *= 2;
                                 count++;
                             }
-                            sb.Append(hexChar);
+                            sb.Insert(2, hexChar);
                             break;
                         }
 
@@ -329,7 +329,7 @@ namespace Assignment1
                         if (count == 4)
                         {
                             hexChar = HexNumDictionary(sumOfBits);
-                            sb.Append(hexChar);
+                            sb.Insert(2, hexChar);
 
                             count = 0;
                             sumOfBits = 0;
@@ -338,16 +338,8 @@ namespace Assignment1
 
 
                     }
-                    string reversedHexNum = sb.ToString();
 
-                    StringBuilder resultSb = new StringBuilder("0x");
-
-                    for (int i = reversedHexNum.Length - 1; i >= 0; i--)
-                    {
-                        resultSb.Append(reversedHexNum[i]);
-                    }
-
-                    return resultSb.ToString();
+                    return sb.ToString();
                 }
 
                 else
@@ -658,6 +650,24 @@ namespace Assignment1
                 if (num.Length > 2)
                 {
                     if (!num.StartsWith('0'))
+                    {
+                        for (int i = 1; i < num.Length; i++)
+                        {
+                            if (!(48 <= num[i] && num[i] <= 57)) // each element '0' ~ '9'check
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+
+            else
+            {
+                if (num.Length > 1)
+                {
+                    if(!num.StartsWith('0'))
                     {
                         for (int i = 1; i < num.Length; i++)
                         {
