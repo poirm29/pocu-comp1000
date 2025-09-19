@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace Assignment1
@@ -129,13 +127,13 @@ namespace Assignment1
                 StringBuilder divideNumSb = new StringBuilder();
 
                 string positiveNum;
-                bool bIsPostive = true;
+                bool bPostive = true;
 
                 if (num[0] == '-')
                 {
                     positiveNum = num.Remove(0, 1);
 
-                    bIsPostive = false;
+                    bPostive = false;
                 }
                 else
                 {
@@ -146,7 +144,7 @@ namespace Assignment1
 
                 binSb.Insert(2, 0);
 
-                if (!bIsPostive)
+                if (!bPostive)
                 {
                     return GetTwosComplementOrNull(binSb.ToString());
                 }
@@ -154,48 +152,6 @@ namespace Assignment1
                 {
                     return binSb.ToString();
                 }
-
-                //int decNum = 0;
-                //decNum = int.Parse(num);
-
-                //StringBuilder sb = new StringBuilder("0b");
-
-                //if (decNum >= 0)
-                //{
-                //    while (true)
-                //    {
-                //        if (decNum == 1)
-                //        {
-                //            sb.Insert(2, decNum);
-                //            sb.Insert(2, '0');
-
-                //            return sb.ToString();
-                //        }
-
-                //        sb.Insert(2, decNum % 2);
-                //        decNum /= 2;
-                //    }
-                //}
-                //else
-                //{
-                //    decNum = ~decNum;
-                //    decNum += 1;
-
-                //    while (true)
-                //    {
-                //        if (decNum == 1)
-                //        {
-                //            sb.Insert(2, decNum);
-                //            sb.Insert(2, '0');
-
-                //            break;
-                //        }
-
-                //        sb.Insert(2, decNum % 2);
-                //        decNum /= 2;
-                //    }
-                //    return GetTwosComplementOrNull(sb.ToString());
-                //}
             }
         }
 
