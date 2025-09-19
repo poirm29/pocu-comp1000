@@ -286,7 +286,7 @@ namespace Assignment1
 
             if (num.StartsWith("0b"))
             {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder("0x");
 
                 int count = 0;
                 int sumOfBits = 0;
@@ -342,6 +342,11 @@ namespace Assignment1
                     return sb.ToString();
                 }
 
+                else if (num.StartsWith("0x"))
+                {
+                    return num;
+                }
+
                 else
                 {
                     for (int i = num.Length - 1; i > 1; i--)
@@ -349,7 +354,7 @@ namespace Assignment1
                         if (count < 4 && i == 2)
                         {
                             hexChar = HexNumDictionary(sumOfBits);
-                            sb.Append(hexChar);
+                            sb.Insert(2, hexChar);
 
                             break;
                         }
@@ -370,29 +375,16 @@ namespace Assignment1
                         if (count == 4)
                         {
                             hexChar = HexNumDictionary(sumOfBits);
-                            sb.Append(hexChar);
+                            sb.Insert(2, hexChar);
 
                             count = 0;
                             sumOfBits = 0;
                             twoMltiplier = 1;
                         }
                     }
-                    string reversedHexNum = sb.ToString();
 
-                    StringBuilder resultSb = new StringBuilder("0x");
-
-                    for (int i = reversedHexNum.Length - 1; i >= 0; i--)
-                    {
-                        resultSb.Append(reversedHexNum[i]);
-                    }
-
-                    return resultSb.ToString();
+                    return sb.ToString();
                 }
-            }
-
-            else if (num.StartsWith("0x"))
-            {
-                return num;
             }
 
             else
@@ -667,7 +659,7 @@ namespace Assignment1
             {
                 if (num.Length > 1)
                 {
-                    if(!num.StartsWith('0'))
+                    if (!num.StartsWith('0'))
                     {
                         for (int i = 1; i < num.Length; i++)
                         {
