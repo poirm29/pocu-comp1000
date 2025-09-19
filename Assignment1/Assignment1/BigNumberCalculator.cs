@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace Assignment1
@@ -124,47 +125,77 @@ namespace Assignment1
 
             else
             {
-                int decNum = 0;
-                decNum = int.Parse(num);
+                StringBuilder binSb = new StringBuilder("0b");
+                StringBuilder divideNumSb = new StringBuilder();
 
-                StringBuilder sb = new StringBuilder("0b");
+                string positiveNum;
+                bool bIsPostive = true;
 
-                if (decNum >= 0)
+                if (num[0] == '-')
                 {
-                    while (true)
-                    {
-                        if (decNum == 1)
-                        {
-                            sb.Insert(2, decNum);
-                            sb.Insert(2, '0');
+                    positiveNum = num.Remove(0, 1);
 
-                            return sb.ToString();
-                        }
-
-                        sb.Insert(2, decNum % 2);
-                        decNum /= 2;
-                    }
+                    bIsPostive = false;
                 }
                 else
                 {
-                    decNum = ~decNum;
-                    decNum += 1;
-
-                    while (true)
-                    {
-                        if (decNum == 1)
-                        {
-                            sb.Insert(2, decNum);
-                            sb.Insert(2, '0');
-
-                            break;
-                        }
-
-                        sb.Insert(2, decNum % 2);
-                        decNum /= 2;
-                    }
-                    return GetTwosComplementOrNull(sb.ToString());
+                    positiveNum = num;
                 }
+
+                DivideRecursive(positiveNum, divideNumSb, binSb);
+
+                binSb.Insert(2, 0);
+
+                if (!bIsPostive)
+                {
+                    return GetTwosComplementOrNull(binSb.ToString());
+                }
+                else
+                {
+                    return binSb.ToString();
+                }
+
+                //int decNum = 0;
+                //decNum = int.Parse(num);
+
+                //StringBuilder sb = new StringBuilder("0b");
+
+                //if (decNum >= 0)
+                //{
+                //    while (true)
+                //    {
+                //        if (decNum == 1)
+                //        {
+                //            sb.Insert(2, decNum);
+                //            sb.Insert(2, '0');
+
+                //            return sb.ToString();
+                //        }
+
+                //        sb.Insert(2, decNum % 2);
+                //        decNum /= 2;
+                //    }
+                //}
+                //else
+                //{
+                //    decNum = ~decNum;
+                //    decNum += 1;
+
+                //    while (true)
+                //    {
+                //        if (decNum == 1)
+                //        {
+                //            sb.Insert(2, decNum);
+                //            sb.Insert(2, '0');
+
+                //            break;
+                //        }
+
+                //        sb.Insert(2, decNum % 2);
+                //        decNum /= 2;
+                //    }
+                //    return GetTwosComplementOrNull(sb.ToString());
+                //}
             }
         }
 
@@ -638,6 +669,48 @@ namespace Assignment1
             }
 
             return true;
+        }
+
+        public static void DivideRecursive(string num, StringBuilder dividedNumSb, StringBuilder binSb)
+        {
+            if (dividedNumSb.ToString() == "1")
+            {
+                binSb.Insert(2, "1");
+
+                return;
+            }
+
+            int eachDigit = 0;
+            int eachQuotient = 0;
+            int eachRemainder = 0;
+
+            dividedNumSb.Clear();
+
+            if (num[0] != '-')
+            {
+                for (int i = 0; i < num.Length; i++)
+                {
+                    const int DEVISOR_TWO = 2;
+
+                    eachDigit = num[i] - 48;
+
+                    if (eachRemainder == 1)
+                    {
+                        eachDigit += 10;
+                    }
+
+                    eachQuotient = eachDigit / DEVISOR_TWO;
+                    eachRemainder = eachDigit % DEVISOR_TWO;
+
+                    if (!(i == 0 && eachQuotient == 0))
+                    {
+                        dividedNumSb.Append(eachQuotient);
+                    }
+                }
+
+                binSb.Insert(2, eachRemainder.ToString());
+            }
+            DivideRecursive(dividedNumSb.ToString(), dividedNumSb, binSb);
         }
     }
 }
