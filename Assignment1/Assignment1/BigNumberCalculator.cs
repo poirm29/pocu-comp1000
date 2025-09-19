@@ -164,43 +164,33 @@ namespace Assignment1
 
             if (num.StartsWith("0b"))
             {
-                if (num[2] == '0')
-                {
-                    int sumOfbits = 0;
-                    int twoMltiplier = 1;
+                bool bIsPositive = true;
+                string positiveNum;
 
-                    for (int i = num.Length - 1; i >= 2; i--)
-                    {
-                        if (num[i] == '1')
-                        {
-                            sumOfbits += twoMltiplier;
-                        }
-                        twoMltiplier *= 2;
-                    }
-                    return sumOfbits.ToString();
+                if (num[2] == '1')
+                {
+                    bIsPositive = false;
                 }
 
-                else
+                if (!bIsPositive)
                 {
-                    string twosComplentNum = GetTwosComplementOrNull(num);
+                    positiveNum = GetTwosComplementOrNull(num);
+                }
 
-                    int result = 0;
-                    int twoMltiplier = 1;
+                StringBuilder sumOfEachDigit = new StringBuilder();
 
-                    for (int i = twosComplentNum.Length - 1; i >= 2; i--)
+                int multiplyCount = 0;
+
+                for (int i = num.Length - 1; i >= 2; i--)
+                {
+                    for (int j = 0; j < multiplyCount; j++)
                     {
-                        if (twosComplentNum[i] == '1')
-                        {
-                            result += twoMltiplier;
-                        }
-                        twoMltiplier *= 2;
+                        //Todo 덧셈 구현 후 조합해서 2 승수끼리 더하기
                     }
 
-                    result = ~result;
-                    result = result + 1;
-
-                    return result.ToString();
+                    multiplyCount++;
                 }
+                return null;
             }
 
             else if (num.StartsWith("0x"))
@@ -667,6 +657,102 @@ namespace Assignment1
                 binSb.Insert(2, eachRemainder.ToString());
             }
             DivideRecursive(dividedNumSb.ToString(), dividedNumSb, binSb);
+        }
+
+        public static void MultiplyTwoString (string num, StringBuilder multipliedSb)
+        {
+            const int MULTIPLY_NUM = 2;
+            const int ASCII_TO_NUM = 48;
+
+            multipliedSb.Clear();
+
+            int roundNum = 0;
+            int digitNum = 0;
+            int multipliedNum = 0;
+
+            for (int i = num.Length - 1; i >= 0; i--)
+            {
+                digitNum = num[i] - ASCII_TO_NUM;
+
+                multipliedNum = digitNum * MULTIPLY_NUM + roundNum;
+
+                if (digitNum >= 5)
+                {
+                    multipliedNum += -10;
+                    roundNum = 1;
+                }
+                else
+                {
+                    roundNum = 0;
+                }
+
+                multipliedSb.Insert(0, multipliedNum.ToString());
+            }
+
+            return;
+        }
+
+        public static void AddString (string num1, string num2, StringBuilder resultSb)
+        {
+            const int ASCII_TO_NUM = 48;
+
+            resultSb.Clear();
+
+            string longNum = num1;
+            string shortNum = num2;
+
+            if (num1.Length > num2.Length)
+            {
+            }
+            else
+            {
+                longNum = num2;
+                shortNum = num1;
+            }
+
+            resultSb.Append(shortNum);
+
+            for (int i = 0; i < longNum.Length - shortNum.Length; i++)
+            {
+                resultSb.Insert(0, '0');
+            }
+
+            string fillUpZeroShortNum = resultSb.ToString();
+
+            resultSb.Clear();
+
+            int round = 0;
+            int shortLength = 0;
+            int longLength = 0;
+
+            shortLength = shortNum.Length;
+            longLength = longNum.Length;
+
+
+            int digitNum1 = 0;
+            int digitNum2 = 0;
+            int sumOfDigit = 0;
+
+            for (int i = longNum.Length - 1; i >= 0; i--)
+            {
+                digitNum1 = longNum[i] - ASCII_TO_NUM;
+                digitNum2 = fillUpZeroShortNum[i]- ASCII_TO_NUM;
+
+                sumOfDigit = digitNum1 + digitNum2 + round;
+
+                if (sumOfDigit >= 10)
+                {
+                    sumOfDigit -= 10;
+                    round = 1;
+                }
+                else
+                {
+                    round = 0;
+                }
+                resultSb.Insert(0, sumOfDigit.ToString());
+            }
+
+            return;
         }
     }
 }
