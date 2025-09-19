@@ -641,7 +641,7 @@ namespace Assignment1
             {
                 if (num.Length >= 2)
                 {
-                    if (!num.StartsWith('0'))
+                    if (num[1] != '0')
                     {
                         for (int i = 1; i < num.Length; i++)
                         {
@@ -661,7 +661,7 @@ namespace Assignment1
                 {
                     if (!num.StartsWith('0'))
                     {
-                        for (int i = 1; i < num.Length; i++)
+                        for (int i = 0; i < num.Length; i++)
                         {
                             if (!(48 <= num[i] && num[i] <= 57)) // each element '0' ~ '9'check
                             {
