@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace Assignment1
@@ -623,12 +624,7 @@ namespace Assignment1
         {
             if (num.StartsWith("0b"))
             {
-                if (num == "0b")
-                {
-                    return false;
-                }
-
-                else
+                if (num.Length > 3)
                 {
                     for (int i = 2; i < num.Length; i++)
                     {
@@ -637,16 +633,14 @@ namespace Assignment1
                             return false;
                         }
                     }
+
+                    return true;
                 }
             }
+
             else if (num.StartsWith("0x"))
             {
-                if (num == "0x")
-                {
-                    return false;
-                }
-
-                else
+                if (num.Length > 3)
                 {
                     for (int i = 2; i < num.Length; i++)
                     {
@@ -655,33 +649,31 @@ namespace Assignment1
                             return false;
                         }
                     }
+
+                    return true;
                 }
             }
 
-            else
+            else if (num.StartsWith('-'))
             {
-                if (num[0] == '-')
+                if (num.Length > 2)
                 {
-                    for (int i = 1; i < num.Length - 1; i++)
+                    if (!num.StartsWith('0'))
                     {
-                        if (!(48 <= num[i] && num[i] <= 57))
+                        for (int i = 1; i < num.Length; i++)
                         {
-                            return false;
+                            if (!(48 <= num[i] && num[i] <= 57)) // each element '0' ~ '9'check
+                            {
+                                return false;
+                            }
                         }
-                    }
-                }
-                else
-                {
-                    for (int i = 1; i < num.Length - 1; i++)
-                    {
-                        if (!(48 <= num[i] && num[i] <= 57))
-                        {
-                            return false;
-                        }
+
+                        return true;
                     }
                 }
             }
-            return true;
+
+            return false;
         }
 
         public static bool IsInputInBitCount(string num, int bitCount)
