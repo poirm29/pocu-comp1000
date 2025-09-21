@@ -176,18 +176,22 @@ namespace Assignment1
                 {
                     positiveNum = GetTwosComplementOrNull(num);
                 }
+                else
+                {
+                    positiveNum = num;
+                }
 
                 StringBuilder sb = new StringBuilder();
 
-                string multipliedNum ="1";
+                string multipliedNum = "1";
                 int multiplyCount = 0;
                 string sumOfNum = "0";
 
-                for (int i = num.Length - 1; i > 2; i--)
+                for (int i = positiveNum.Length - 1; i > 2; i--)
                 {
-                    if (num[i] == '1')
+                    if (positiveNum[i] == '1')
                     {
-                        if (i == num.Length - 1)
+                        if (i == positiveNum.Length - 1)
                         {
                             multipliedNum = "1";
                         }
@@ -211,7 +215,7 @@ namespace Assignment1
                     multiplyCount++;
                 }
 
-                if(!bPositive)
+                if (!bPositive)
                 {
                     sumOfNum = "-" + sumOfNum;
                 }
@@ -376,14 +380,14 @@ namespace Assignment1
             {
                 while (num1Sb.Length > num2Sb.Length)
                 {
-                    num2Sb.Insert(0, num2Sb[0]);
+                    num2Sb.Insert(1, '0');
                 }
             }
             else
             {
                 while (num2Sb.Length > num1Sb.Length)
                 {
-                    num1Sb.Insert(0, num1Sb[0]);
+                    num1Sb.Insert(1, '0');
                 }
             }
 
@@ -395,31 +399,41 @@ namespace Assignment1
             int carryNum = 0;
             int digitNum = 0;
 
-            int previousLastCarryNum = 0;
-
             bOverflow = false;
+
+            int count = 0;
 
             for (int i = binNum1.Length - 1; i >= 0; i--)
             {
-                digitNum = binNum1[i] ^ binNum2[i];
+                if (count > BitCount)
+                {
+                    bOverflow = true;
+                    return null;
+                }
 
-                digitNum += carryNum;
-
-                if (digitNum == 2)
+                if (binNum1[i] != binNum2[i])
+                {
+                    digitNum = 1;
+                }
+                else if (binNum1[1] == '0' && binNum2[i] == '0')
                 {
                     digitNum = 0;
                 }
+                else
+                {
+                    digitNum = 2;
+                }
 
-                if (binNum1[i] == '1' && binNum2[i] == '1')
+                    digitNum += carryNum;
+
+                if (digitNum == 3)
                 {
+                    digitNum = 1;
                     carryNum = 1;
                 }
-                else if (binNum1[i] == '1' && carryNum == 1)
+                else if (digitNum == 2)
                 {
-                    carryNum = 1;
-                }
-                else if (binNum2[i] == '1' && carryNum == 1)
-                {
+                    digitNum = 0;
                     carryNum = 1;
                 }
                 else
@@ -436,54 +450,31 @@ namespace Assignment1
                     addResultSb.Insert(0, '1');
                 }
 
-                if (i == 1)
+                if (i == 0 && carryNum == 1)
                 {
-                    previousLastCarryNum = carryNum;
+                    addResultSb.Insert(0, '0');
                 }
+
+                count++;
             }
 
-            bool bCarried1 = false;
-            bool bCarried2 = true;
-            if (previousLastCarryNum == 1)
-            {
-                bCarried1 = true;
-            }
-            else
-            {
-                bCarried1 = false;
-            }
+            addResultSb.Insert(0, "0b");
 
-            if (carryNum == 1)
-            {
-                bCarried2 = true;
-            }
-            else
-            {
-                bCarried2 = false;
-            }
-
-            bOverflow = bCarried1 ^ bCarried2;
-
-            StringBuilder sb = new StringBuilder("0b");
+            string addResultBin = addResultSb.ToString();
 
             switch (Mode)
             {
                 case EMode.Decimal:
-                    for (int i = 0; i < addResultSb.Length; i++)
-                    {
-                        sb.Append(addResultSb[i]);
-                    }
-
-                    return ToDecimalOrNull(sb.ToString());
+                    return ToDecimalOrNull(addResultBin);
                 case EMode.Binary:
-                    for (int i = 0; i < addResultSb.Length; i++)
+                    while (addResultSb.Length < BitCount)
                     {
-                        sb.Append(addResultSb[i]);
+                        addResultSb.Insert(0, '0');
                     }
 
-                    return sb.ToString();
+                    addResultBin = addResultSb.ToString();
+                    return addResultBin;
             }
-
             return null;
         }
 
