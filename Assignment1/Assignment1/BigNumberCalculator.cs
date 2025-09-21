@@ -361,6 +361,12 @@ namespace Assignment1
                 return null;
             }
 
+            if (!IsItValidNumFormat(num1) || !IsItValidNumFormat(num2))
+            {
+                bOverflow = false;
+                return null;
+            }
+
             string binNum1StartWith0b = ToBinaryOrNull(num1);
             string binNum2StartWith0b = ToBinaryOrNull(num2);
 
@@ -516,6 +522,12 @@ namespace Assignment1
         public string SubtractOrNull(string num1, string num2, out bool bOverflow)
         {
             if (!IsInputInBitCount(num1, BitCount) || !IsInputInBitCount(num2, BitCount))
+            {
+                bOverflow = false;
+                return null;
+            }
+
+            if (!IsItValidNumFormat(num1) || !IsItValidNumFormat(num2))
             {
                 bOverflow = false;
                 return null;
