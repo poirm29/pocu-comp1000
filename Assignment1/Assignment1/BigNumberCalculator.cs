@@ -399,16 +399,16 @@ namespace Assignment1
                 {
                     if (binNum1StartWith0b[2] == '0')
                     {
-                        while (num1Sb.Length > num2Sb.Length)
+                        while (num1Sb.Length < num2Sb.Length)
                         {
-                            num2Sb.Insert(0, '0');
+                            num1Sb.Insert(0, '0');
                         }
                     }
                     else
                     {
-                        while (num1Sb.Length > num2Sb.Length)
+                        while (num1Sb.Length < num2Sb.Length)
                         {
-                            num2Sb.Insert(0, '1');
+                            num1Sb.Insert(0, '1');
                         }
                     }
                 }
@@ -478,7 +478,9 @@ namespace Assignment1
             if (binNum1StartWith0b[2] == '0' && binNum2StartWith0b[2] == '0')
             {
                 if (addResultSb[2] == '1')
+                {
                     bOverflow = true;
+                }
             }
             else if (binNum1StartWith0b[2] == '1' && binNum2StartWith0b[2] == '1')
             {
@@ -493,9 +495,16 @@ namespace Assignment1
                 case EMode.Decimal:
                     return ToDecimalOrNull(addResultBin);
                 case EMode.Binary:
-                    while (addResultSb.Length < BitCount)
+                    while (addResultSb.Length < BitCount + 2)
                     {
-                        addResultSb.Insert(0, '0');
+                        if (addResultSb[2] == '0')
+                        {
+                            addResultSb.Insert(2, '0');
+                        }
+                        else
+                        {
+                            addResultSb.Insert(2, '1');
+                        }
                     }
 
                     addResultBin = addResultSb.ToString();
@@ -506,8 +515,20 @@ namespace Assignment1
 
         public string SubtractOrNull(string num1, string num2, out bool bOverflow)
         {
-            bOverflow = false;
-            return null;
+            if (!IsInputInBitCount(num1, BitCount) || !IsInputInBitCount(num2, BitCount))
+            {
+                bOverflow = false;
+                return null;
+            }
+
+            string binNum1StartWith0b = ToBinaryOrNull(num1);
+            string binNum2StartWith0b = ToBinaryOrNull(num2);
+
+            binNum2StartWith0b = GetTwosComplementOrNull(binNum2StartWith0b);
+
+            string result = AddOrNull(binNum1StartWith0b, binNum2StartWith0b, out bOverflow);
+
+            return result;
         }
 
         public static string HexNumDictionary(char num)
