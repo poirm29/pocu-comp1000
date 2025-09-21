@@ -102,7 +102,7 @@ namespace Assignment1
             {
                 return null;
             }
-            
+
             if (num.StartsWith("0b"))
             {
                 return num;
@@ -118,7 +118,7 @@ namespace Assignment1
 
                     sb.Append(convertedBinaryToken);
                 }
-                return sb.ToString(); 
+                return sb.ToString();
             }
 
             else
@@ -378,16 +378,39 @@ namespace Assignment1
 
             if (num1Sb.Length > num2Sb.Length)
             {
-                while (num1Sb.Length > num2Sb.Length)
+                if (binNum2StartWith0b[2] == '0')
                 {
-                    num2Sb.Insert(1, '0');
+                    while (num1Sb.Length > num2Sb.Length)
+                    {
+                        num2Sb.Insert(0, '0');
+                    }
+                }
+                else
+                {
+                    while (num1Sb.Length > num2Sb.Length)
+                    {
+                        num2Sb.Insert(0, '1');
+                    }
                 }
             }
             else
             {
                 while (num2Sb.Length > num1Sb.Length)
                 {
-                    num1Sb.Insert(1, '0');
+                    if (binNum1StartWith0b[2] == '0')
+                    {
+                        while (num1Sb.Length > num2Sb.Length)
+                        {
+                            num2Sb.Insert(0, '0');
+                        }
+                    }
+                    else
+                    {
+                        while (num1Sb.Length > num2Sb.Length)
+                        {
+                            num2Sb.Insert(0, '1');
+                        }
+                    }
                 }
             }
 
@@ -405,17 +428,12 @@ namespace Assignment1
 
             for (int i = binNum1.Length - 1; i >= 0; i--)
             {
-                if (count > BitCount)
-                {
-                    bOverflow = true;
-                    return null;
-                }
 
                 if (binNum1[i] != binNum2[i])
                 {
                     digitNum = 1;
                 }
-                else if (binNum1[1] == '0' && binNum2[i] == '0')
+                else if (binNum1[i] == '0' && binNum2[i] == '0')
                 {
                     digitNum = 0;
                 }
@@ -424,7 +442,7 @@ namespace Assignment1
                     digitNum = 2;
                 }
 
-                    digitNum += carryNum;
+                digitNum += carryNum;
 
                 if (digitNum == 3)
                 {
@@ -450,17 +468,25 @@ namespace Assignment1
                     addResultSb.Insert(0, '1');
                 }
 
-                if (i == 0 && carryNum == 1)
-                {
-                    addResultSb.Insert(0, '0');
-                }
-
                 count++;
             }
 
             addResultSb.Insert(0, "0b");
 
             string addResultBin = addResultSb.ToString();
+
+            if (binNum1StartWith0b[2] == '0' && binNum2StartWith0b[2] == '0')
+            {
+                if (addResultSb[2] == '1')
+                    bOverflow = true;
+            }
+            else if (binNum1StartWith0b[2] == '1' && binNum2StartWith0b[2] == '1')
+            {
+                if (addResultSb[2] == '0')
+                {
+                    bOverflow = true;
+                }
+            }
 
             switch (Mode)
             {
