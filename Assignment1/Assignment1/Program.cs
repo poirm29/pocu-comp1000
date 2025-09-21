@@ -8,14 +8,12 @@ namespace Assignment1
     {
         static void Main(string[] args)
         {
-            string a = "12948108495853200423094230984230948203948230942329";
-            string b = "954540509283509284029349023480293840923840923580924684309683096834096545835305";
+
+            string num1 = "0b110101111";
 
             StringBuilder sb = new StringBuilder();
 
-            BigNumberCalculator.AddString(a, b, sb);
-
-            string result = sb.ToString();
+            string result = BigNumberCalculator.ToDecimalOrNull(num1);
 
             Console.WriteLine(result);
         }

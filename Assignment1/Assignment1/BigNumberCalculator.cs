@@ -164,33 +164,59 @@ namespace Assignment1
 
             if (num.StartsWith("0b"))
             {
-                bool bIsPositive = true;
+                bool bPositive = true;
                 string positiveNum;
 
                 if (num[2] == '1')
                 {
-                    bIsPositive = false;
+                    bPositive = false;
                 }
 
-                if (!bIsPositive)
+                if (!bPositive)
                 {
                     positiveNum = GetTwosComplementOrNull(num);
                 }
 
-                StringBuilder sumOfEachDigit = new StringBuilder();
+                StringBuilder sb = new StringBuilder();
 
+                string multipliedNum ="1";
                 int multiplyCount = 0;
+                string sumOfNum = "0";
 
-                for (int i = num.Length - 1; i >= 2; i--)
+                for (int i = num.Length - 1; i > 2; i--)
                 {
-                    for (int j = 0; j < multiplyCount; j++)
+                    if (num[i] == '1')
                     {
-                        //Todo 덧셈 구현 후 조합해서 2 승수끼리 더하기
+                        if (i == num.Length - 1)
+                        {
+                            multipliedNum = "1";
+                        }
+                        else
+                        {
+                            for (int j = 0; j < multiplyCount; j++)
+                            {
+                                MultiplyTwoString(multipliedNum, sb);
+
+                                multipliedNum = sb.ToString();
+                            }
+                        }
+                        sb.Clear();
+                        AddString(sumOfNum, multipliedNum, sb);
+
+                        sumOfNum = sb.ToString();
                     }
 
+                    multipliedNum = "1";
+                    sb.Clear();
                     multiplyCount++;
                 }
-                return null;
+
+                if(!bPositive)
+                {
+                    sumOfNum = "-" + sumOfNum;
+                }
+
+                return sumOfNum;
             }
 
             else if (num.StartsWith("0x"))
@@ -659,7 +685,7 @@ namespace Assignment1
             DivideRecursive(dividedNumSb.ToString(), dividedNumSb, binSb);
         }
 
-        public static void MultiplyTwoString (string num, StringBuilder multipliedSb)
+        public static void MultiplyTwoString(string num, StringBuilder multipliedSb)
         {
             const int MULTIPLY_NUM = 2;
             const int ASCII_TO_NUM = 48;
@@ -678,8 +704,11 @@ namespace Assignment1
 
                 if (digitNum >= 5)
                 {
-                    multipliedNum += -10;
                     roundNum = 1;
+                    if (i != 0)
+                    {
+                        multipliedNum -= 10;
+                    }
                 }
                 else
                 {
@@ -692,7 +721,7 @@ namespace Assignment1
             return;
         }
 
-        public static void AddString (string num1, string num2, StringBuilder resultSb)
+        public static void AddString(string num1, string num2, StringBuilder resultSb)
         {
             const int ASCII_TO_NUM = 48;
 
@@ -736,14 +765,17 @@ namespace Assignment1
             for (int i = longNum.Length - 1; i >= 0; i--)
             {
                 digitNum1 = longNum[i] - ASCII_TO_NUM;
-                digitNum2 = fillUpZeroShortNum[i]- ASCII_TO_NUM;
+                digitNum2 = fillUpZeroShortNum[i] - ASCII_TO_NUM;
 
                 sumOfDigit = digitNum1 + digitNum2 + round;
 
                 if (sumOfDigit >= 10)
                 {
-                    sumOfDigit -= 10;
                     round = 1;
+                    if (i != 0)
+                    {
+                        sumOfDigit -= 10;
+                    }
                 }
                 else
                 {
