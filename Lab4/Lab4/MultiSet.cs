@@ -197,6 +197,7 @@ namespace Lab4
 
         public List<MultiSet> FindPowerSet()
         {
+
             return null;
         }
 
