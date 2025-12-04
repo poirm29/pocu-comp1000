@@ -26,6 +26,10 @@ namespace Lab6
                 {
                     NonRecycleItems.Add(item);
                 }
+                else
+                {
+                    RecycleItems.Add(item);
+                }
             }
             else
             {
@@ -38,14 +42,11 @@ namespace Lab6
             List<Item> DumpItems = new List<Item>();
             foreach (var item in NonRecycleItems)
             {
-                if (!((item.Volume == 10 || item.Volume == 11 || item.Volume == 15) && item.IsToxicWaste == false))
+                if (item.Volume != 10 && item.Volume != 11 && item.Volume != 15 && item.IsToxicWaste == false)
                 {
-                    if (!(item.Type == EType.Furniture || item.Type == EType.Electronics))
-                    {
-
-                    }
+                    DumpItems.Add(item);
                 }
-                else
+                else if (item.Type == EType.Furniture || item.Type == EType.Electronics)
                 {
                     DumpItems.Add(item);
                 }
