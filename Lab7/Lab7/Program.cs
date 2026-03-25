@@ -84,31 +84,31 @@ namespace Lab7
             Debug.Assert(intersect.FirstOrDefault(i => i.ID == frames[5].ID) != null);
             Debug.Assert(intersect.FirstOrDefault(i => i.ID == frames[6].ID) != null);
 
-            //List<int> sortKeys = FilterEngine.GetSortKeys(frames, new List<EFeatureFlags> { EFeatureFlags.Aviator, EFeatureFlags.Men, EFeatureFlags.Rectangle, EFeatureFlags.Red });
-            //Debug.Assert(sortKeys.Count == frames.Count);
+            List<int> sortKeys = FilterEngine.GetSortKeys(frames, new List<EFeatureFlags> { EFeatureFlags.Aviator, EFeatureFlags.Men, EFeatureFlags.Rectangle, EFeatureFlags.Red });
+            Debug.Assert(sortKeys.Count == frames.Count);
 
-            //List<Frame> sortedFrames = sort(sortKeys, frames);
+            List<Frame> sortedFrames = sort(sortKeys, frames);
 
-            //Debug.Assert(sortedFrames[0].ID == frames[2].ID);
-            //Debug.Assert(sortedFrames[1].ID == frames[0].ID);
-            //Debug.Assert(sortedFrames[2].ID == frames[5].ID);
-            //Debug.Assert(sortedFrames[3].ID == frames[4].ID);
-            //Debug.Assert(sortedFrames[4].ID == frames[1].ID || sortedFrames[4].ID == frames[3].ID || sortedFrames[4].ID == frames[6].ID);
-            //Debug.Assert(sortedFrames[5].ID == frames[1].ID || sortedFrames[5].ID == frames[3].ID || sortedFrames[5].ID == frames[6].ID);
-            //Debug.Assert(sortedFrames[6].ID == frames[1].ID || sortedFrames[6].ID == frames[3].ID || sortedFrames[6].ID == frames[6].ID);
+            Debug.Assert(sortedFrames[0].ID == frames[2].ID);
+            Debug.Assert(sortedFrames[1].ID == frames[0].ID);
+            Debug.Assert(sortedFrames[2].ID == frames[5].ID);
+            Debug.Assert(sortedFrames[3].ID == frames[4].ID);
+            Debug.Assert(sortedFrames[4].ID == frames[1].ID || sortedFrames[4].ID == frames[3].ID || sortedFrames[4].ID == frames[6].ID);
+            Debug.Assert(sortedFrames[5].ID == frames[1].ID || sortedFrames[5].ID == frames[3].ID || sortedFrames[5].ID == frames[6].ID);
+            Debug.Assert(sortedFrames[6].ID == frames[1].ID || sortedFrames[6].ID == frames[3].ID || sortedFrames[6].ID == frames[6].ID);
 
-            //sortKeys = FilterEngine.GetSortKeys(frames, new List<EFeatureFlags> { EFeatureFlags.Rectangle, EFeatureFlags.Black, EFeatureFlags.Women });
-            //Debug.Assert(sortKeys.Count == frames.Count);
+            sortKeys = FilterEngine.GetSortKeys(frames, new List<EFeatureFlags> { EFeatureFlags.Rectangle, EFeatureFlags.Black, EFeatureFlags.Women });
+            Debug.Assert(sortKeys.Count == frames.Count);
 
-            //sortedFrames = sort(sortKeys, frames);
+            sortedFrames = sort(sortKeys, frames);
 
-            //Debug.Assert(sortedFrames[0].ID == frames[0].ID);
-            //Debug.Assert(sortedFrames[1].ID == frames[1].ID);
-            //Debug.Assert(sortedFrames[2].ID == frames[2].ID || sortedFrames[2].ID == frames[5].ID || sortedFrames[2].ID == frames[6].ID);
-            //Debug.Assert(sortedFrames[3].ID == frames[2].ID || sortedFrames[3].ID == frames[5].ID || sortedFrames[3].ID == frames[6].ID);
-            //Debug.Assert(sortedFrames[4].ID == frames[2].ID || sortedFrames[4].ID == frames[5].ID || sortedFrames[4].ID == frames[6].ID);
-            //Debug.Assert(sortedFrames[5].ID == frames[3].ID || sortedFrames[5].ID == frames[4].ID);
-            //Debug.Assert(sortedFrames[6].ID == frames[3].ID || sortedFrames[6].ID == frames[4].ID);
+            Debug.Assert(sortedFrames[0].ID == frames[0].ID);
+            Debug.Assert(sortedFrames[1].ID == frames[1].ID);
+            Debug.Assert(sortedFrames[2].ID == frames[2].ID || sortedFrames[2].ID == frames[5].ID || sortedFrames[2].ID == frames[6].ID);
+            Debug.Assert(sortedFrames[3].ID == frames[2].ID || sortedFrames[3].ID == frames[5].ID || sortedFrames[3].ID == frames[6].ID);
+            Debug.Assert(sortedFrames[4].ID == frames[2].ID || sortedFrames[4].ID == frames[5].ID || sortedFrames[4].ID == frames[6].ID);
+            Debug.Assert(sortedFrames[5].ID == frames[3].ID || sortedFrames[5].ID == frames[4].ID);
+            Debug.Assert(sortedFrames[6].ID == frames[3].ID || sortedFrames[6].ID == frames[4].ID);
         }
 
         private static List<Frame> sort(List<int> sortKeys, List<Frame> frames)

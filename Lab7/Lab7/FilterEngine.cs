@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab7
 {
@@ -54,6 +51,13 @@ namespace Lab7
             }
 
             return intersectionList;
+        }
+
+        public static List<int> GetSortKeys(List<Frame> frames, List<EFeatureFlags> features)
+        {
+            List<int> sortKeys = new List<int>();
+
+            return sortKeys;
         }
     }
 }
